@@ -94,6 +94,7 @@
 			width:100%;
 			height:200px;
 			padding-top: 15px;
+			opacity: 0;
 		}
 		canvas{
 			position: fixed;
@@ -141,11 +142,13 @@
 	<canvas id="canvas"></canvas>
 
 	<script>
-		$('#tablet').hide();
-		$('.win').css('top', .32*window.innerHeight).css('opacity', 0).animate({
-			top: .35*window.innerHeight,
-			opacity: 0.95
-		});
+		window.onload = function(){
+			$('#tablet').hide();
+			$('.win').css('top', .32*window.innerHeight).animate({
+				top: .35*window.innerHeight,
+				opacity: 0.95
+			});
+		}
 
 	//theme changing
 		$('#theme').click(function(){
