@@ -1,6 +1,6 @@
 <html>
 <head>
-	<script src="jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="bootstrap/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="bootstrap/bootstrap.min.css">
 	<style>
@@ -93,8 +93,7 @@
 			font-size: 120px;
 			width:100%;
 			height:200px;
-			padding-top: 15px;
-			opacity: 0;
+			padding-top: 10px;
 		}
 		canvas{
 			position: fixed;
@@ -130,7 +129,7 @@
 			<p id="winTitle">mod five</p>
 			<br><br>
 			<div id="infoTitle">
-				<h5>make all the numbers into a multiple of 5.  clicking a number will add itself to it's entire row and column<br>oh, by the way, you only have 15 moves.  good luck!</h5>
+				<h5>make all the numbers into a multiple of 5.  clicking a number will add itself to it's entire row and column<br>oh, by the way, you only have 12 moves.  good luck!</h5>
 			</div>
 			<br>
 
@@ -142,13 +141,11 @@
 	<canvas id="canvas"></canvas>
 
 	<script>
-		window.onload = function(){
-			$('#tablet').hide();
-			$('.win').css('top', .32*window.innerHeight).animate({
-				top: .35*window.innerHeight,
-				opacity: 0.95
-			});
-		}
+		$('#tablet').hide();
+		$('.win').css('top', .32*window.innerHeight).css('opacity', 0).animate({
+			top: .35*window.innerHeight,
+			opacity: 0.95
+		});
 
 	//theme changing
 		$('#theme').click(function(){
@@ -197,7 +194,6 @@
 		$('#date').html("<h4>"+day+" | "+dayN+"</h4>");
 
 		var winMessages = ["You Win!", "Great Job!", "Radical Win!", "Touchdown!", "Home Run!"]
-		var loseMessages = ["You Lose...", "ouch!", "not the best...", "Too slow!", "Out of Moves!"]
 		var level = 2;
 		//newGame(3);
 		var lost = false;
@@ -237,7 +233,11 @@
 				table += "<tr id='row"+r+"'>";
 				for (var c=0; c<colN; c++){
 					id = "r"+r+"c"+c;
-					table += "<td class='col' id='"+id+"'><h1>"+(Math.floor(Math.random()*4)+1)+"</h1></td>";
+					var v = 0;
+					while (v%5 == 0){
+						v = (Math.floor(Math.random()*10)+1);
+					}
+					table += "<td class='col' id='"+id+"'><h1>"+v+"</h1></td>";
 				}
 				table += "</tr>";
 			}
@@ -249,6 +249,7 @@
 			var total = 0;
 			var score = 0;
 			var moves = 0;
+			var limit = 12;
 			$('.col').click(function(){
 				var id = $(this).attr('id');
 				var r = id.substring(1, id.search("c"));
@@ -265,10 +266,10 @@
 					$('.marked').removeClass('marked')
 					return;
 				}
-					
 
 				total += parseInt($(this).text(),10);
 				moves += 1;
+
 
 				var v = parseInt($(this).text(),10);
 				
@@ -276,7 +277,7 @@
 				getRow(r).each(function(i, e){
 					if (good(parseInt($(e).text(),10)) == false)
 					{
-						var changed = (parseInt($(e).text(),10) + v)%10;
+						var changed = (parseInt($(e).text(),10) + v);
 						$(e).html("<h1>"+changed+"</h1>")
 
 						if (good(parseInt($(e).text(),10))){
@@ -291,7 +292,7 @@
 				getCol(c).each(function(i, e){
 					if (good(parseInt($(e).text(),10)) == false)
 					{
-						var changed = (parseInt($(e).text(),10) + v)%10;
+						var changed = (parseInt($(e).text(),10) + v);
 						$(e).html("<h1>"+changed+"</h1>")
 
 						if (good(parseInt($(e).text(),10))){
@@ -304,14 +305,14 @@
 				});
 
 				//restore the clicked cell
-				$(this).html("<h1>"+v+"</h1>")
+				$(this).html("<h1>"+v+"</h1>");
 
 				//die if you cross 15 moves :(
-				if (moves > 15){
+				if (moves > limit){
 					$('#cloak').fadeIn();
 					//win message
 					$('#winTitle').text(loseMessages[Math.floor(Math.random()*loseMessages.length)]);
-					$('#infoTitle').html("<i><h5>too many moves!<br>the limit is 15 moves...try again?</h5></i>");
+					$('#infoTitle').html("<i><h5>too many moves!<br>the limit is "+limit+" moves...try again?</h5></i>");
 
 					//make bubbles
 					bubbles();
@@ -324,7 +325,7 @@
 				}
 
 				//update score
-				var danger = "rgb("+Math.floor((256*moves/15))+","+80+","+110+")";
+				var danger = "rgb("+Math.floor((256*moves/limit))+","+80+","+110+")";
 				$('#score').html("score: " + score + " / " + goal + " | <span id='moveCount'>" + moves + "</span> moves");
 				$('#moveCount').css('color', danger);
 				var color = "rgb("+120+","+Math.floor((256*score/goal))+","+50+")";
