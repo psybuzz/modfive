@@ -248,13 +248,6 @@
 			var score = 0;
 			var moves = 0;
 			$('.col').click(function(){
-				total += parseInt($(this).text(),10);
-				moves += 1;
-
-				//don't do anything if it's done
-				if ($(this).hasClass('done'))
-					return;
-
 				var id = $(this).attr('id');
 				var r = id.substring(1, id.search("c"));
 				var c = id.substring(id.search("c")+1);
@@ -265,13 +258,20 @@
 				getRow(r).toggleClass('marked');
 				$(this).toggleClass('marked');
 
+				//don't do anything if it's done
+				if ($(this).hasClass('done'))
+					return;
+
+				total += parseInt($(this).text(),10);
+				moves += 1;
+				
 				var v = parseInt($(this).text(),10);
 				
 				//increment the row and column
 				getRow(r).each(function(i, e){
 					if (good(parseInt($(e).text(),10)) == false)
 					{
-						var changed = (parseInt($(e).text(),10) + v);
+						var changed = (parseInt($(e).text(),10) + v)%10;
 						$(e).html("<h1>"+changed+"</h1>")
 
 						if (good(parseInt($(e).text(),10))){
@@ -286,7 +286,7 @@
 				getCol(c).each(function(i, e){
 					if (good(parseInt($(e).text(),10)) == false)
 					{
-						var changed = (parseInt($(e).text(),10) + v);
+						var changed = (parseInt($(e).text(),10) + v)%10;
 						$(e).html("<h1>"+changed+"</h1>")
 
 						if (good(parseInt($(e).text(),10))){
