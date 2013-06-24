@@ -197,8 +197,10 @@
 		$('#date').html("<h4>"+day+" | "+dayN+"</h4>");
 
 		var winMessages = ["You Win!", "Great Job!", "Radical Win!", "Touchdown!", "Home Run!"]
+		var loseMessages = ["You Lose...", "ouch!", "not the best...", "Too slow!", "Out of Moves!"]
 		var level = 2;
 		//newGame(3);
+		var lost = false;
 
 	//make bubbles
 		var bloom;
@@ -304,6 +306,23 @@
 				//restore the clicked cell
 				$(this).html("<h1>"+v+"</h1>")
 
+				//die if you cross 15 moves :(
+				if (moves > 15){
+					$('#cloak').fadeIn();
+					//win message
+					$('#winTitle').text(loseMessages[Math.floor(Math.random()*loseMessages.length)]);
+					$('#infoTitle').html("<i><h5>too many moves!<br>the limit is 15 moves...try again?</h5></i>");
+
+					//make bubbles
+					bubbles();
+					$('#canvas').show();
+
+					//reset level
+					level = 2;
+					lost = true;
+					$('#nextButton').text("let's try something easier...");
+				}
+
 				//update score
 				$('#score').text(score + " | goal: " + goal);
 				var color = "rgb("+120+","+Math.floor((256*score/goal))+","+50+")";
@@ -335,7 +354,11 @@
 			return $("table tr:eq("+n+") td");
 		}
 		function nextLevel(){
-			level += 1;
+			if (!lost){
+				level += 1;
+			} else {
+				lost = false;
+			}
 			moves = 0;
 			newGame(level);
 			$('#cloak').fadeOut(function(){
