@@ -301,6 +301,9 @@
 					}
 				});
 
+				//restore the clicked cell
+				$(this).html("<h1>"+v+"</h1>")
+
 				//update score
 				$('#score').text(score + " | goal: " + goal);
 				var color = "rgb("+120+","+Math.floor((256*score/goal))+","+50+")";
