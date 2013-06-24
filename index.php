@@ -130,7 +130,7 @@
 			<p id="winTitle">mod five</p>
 			<br><br>
 			<div id="infoTitle">
-				<h5>make all the numbers into a multiple of 5<br>clicking a number will add itself to it's entire row and column</h5>
+				<h5>make all the numbers into a multiple of 5.  clicking a number will add itself to it's entire row and column<br>oh, by the way, you only have 15 moves.  good luck!</h5>
 			</div>
 			<br>
 
@@ -226,7 +226,7 @@
 			}
 
 			var goal = Math.floor(0.75*rowN*colN);
-			$('#score').text("0 | goal: " + goal);
+			$('#score').text("0 / " + goal + " | 0 moves");
 
 		//setting up the grid
 
@@ -324,7 +324,9 @@
 				}
 
 				//update score
-				$('#score').text(score + " | goal: " + goal);
+				var danger = "rgb("+Math.floor((256*moves/15))+","+80+","+110+")";
+				$('#score').html("score: " + score + " / " + goal + " | <span id='moveCount'>" + moves + "</span> moves");
+				$('#moveCount').css('color', danger);
 				var color = "rgb("+120+","+Math.floor((256*score/goal))+","+50+")";
 				$('.inside').css('border-color', color);
 				if (score >= goal){
