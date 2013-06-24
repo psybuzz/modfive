@@ -259,12 +259,15 @@
 				$(this).toggleClass('marked');
 
 				//don't do anything if it's done
-				if ($(this).hasClass('done'))
+				if ($(this).hasClass('done')){
+					$('.marked').removeClass('marked')
 					return;
+				}
+					
 
 				total += parseInt($(this).text(),10);
 				moves += 1;
-				
+
 				var v = parseInt($(this).text(),10);
 				
 				//increment the row and column
