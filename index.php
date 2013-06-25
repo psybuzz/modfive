@@ -210,7 +210,7 @@
 		var limit;
 
 
-		function newGame(level){
+		function newGame(currLevel){
 			total = 0;
 			score = 0;
 			moves = 0;
@@ -221,7 +221,7 @@
 			$('#canvas').fadeOut(500);
 
 			$('#tablet').fadeIn();
-			var rowN = colN = level;
+			var rowN = colN = currLevel;
 			if (rowN <= 3){
 				$('#tablet').css('width', '50%');
 			}
@@ -328,7 +328,7 @@
 					$('#canvas').show();
 
 					//reset level
-					level = 2;
+					level = 3;
 					lost = true;
 					$('#nextButton').text("let's try something easier...");
 				}
