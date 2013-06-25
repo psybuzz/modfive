@@ -193,7 +193,8 @@
 		var dayN = (new Date).getDate();
 		$('#date').html("<h4>"+day+" | "+dayN+"</h4>");
 
-		var winMessages = ["You Win!", "Great Job!", "Radical Win!", "Touchdown!", "Home Run!"]
+		var winMessages = ["You Win!", "Great Job!", "Radical Win!", "Touchdown!", "Home Run!"];
+		var loseMessages = ["You Lose!", "Next time!", "Out of Moves!", "Too bad!"];
 		var level = 2;
 		//newGame(3);
 		var lost = false;
@@ -202,8 +203,19 @@
 		var bloom;
 		bubbles();
 
+	//game vars
+		var total;
+		var score;
+		var moves;
+		var limit;
+
 
 		function newGame(level){
+			total = 0;
+			score = 0;
+			moves = 0;
+			limit = 12;
+
 		//formatting
 			clearInterval(bloom);
 			$('#canvas').fadeOut(500);
@@ -246,10 +258,7 @@
 			id = null;
 
 
-			var total = 0;
-			var score = 0;
-			var moves = 0;
-			var limit = 12;
+			
 			$('.col').click(function(){
 				var id = $(this).attr('id');
 				var r = id.substring(1, id.search("c"));
@@ -363,6 +372,8 @@
 				lost = false;
 			}
 			moves = 0;
+			score = 0;
+			goal = 0;
 			newGame(level);
 			$('#cloak').fadeOut(function(){
 				$('#nextButton').text("let's try something harder...");
