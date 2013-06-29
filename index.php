@@ -129,7 +129,7 @@
 			<p id="winTitle">mod five</p>
 			<br><br>
 			<div id="infoTitle">
-				<h5>make all the numbers into a multiple of 5.  clicking a number will add itself to it's entire row and column<br>oh, by the way, you only have 12 moves.  good luck!</h5>
+				<h5>make all the numbers into a multiple of 5.  clicking a number will add itself to it's entire row and column<br>oh, by the way, you only have 10 moves.  good luck!</h5>
 			</div>
 			<br>
 
@@ -214,7 +214,7 @@
 			total = 0;
 			score = 0;
 			moves = 0;
-			limit = 12;
+			limit = 10;
 
 		//formatting
 			clearInterval(bloom);
@@ -328,7 +328,7 @@
 					$('#canvas').show();
 
 					//reset level
-					level = 3;
+					level = 3;	
 					lost = true;
 					$('#nextButton').text("let's try something easier...");
 				}
